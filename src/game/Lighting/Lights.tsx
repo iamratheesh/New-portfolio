@@ -3,6 +3,12 @@
 export function Lights() {
   return (
     <>
+
+    <hemisphereLight
+  intensity={0.7}
+  skyColor="#bcdfff"
+  groundColor="#444"
+/>
       {/* Ambient base */}
       <ambientLight intensity={0.6} />
 
@@ -20,6 +26,7 @@ export function Lights() {
         shadow-camera-top={20}
         shadow-camera-bottom={-20}
       />
+      
     </>
   )
 }

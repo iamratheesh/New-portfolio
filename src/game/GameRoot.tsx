@@ -9,6 +9,7 @@ import { Player } from './Player/Player'
 import { World } from './World/World'
 import { FollowCamera } from './Camera/FollowCamera'
 import { Lights } from './Lighting/Lights'
+import { Sky } from './World/Sky'
 
 export default function GameRoot() {
 
@@ -25,9 +26,11 @@ export default function GameRoot() {
         // physicallyCorrectLights: true,
         toneMappingExposure: 1.2,
       }}
-    >
+      >
       <Suspense fallback={null}>
         <Lights />
+          <Sky />
+
 
         <Physics gravity={[0, -9.81, 0]}>
           <World />

@@ -1,12 +1,13 @@
 'use client'
 
-import { useLoader } from '@react-three/fiber'
-import { OBJLoader } from 'three-stdlib'
-import { MTLLoader } from 'three-stdlib'
-import { Group } from 'three'
+import { useLoader, useThree } from '@react-three/fiber'
+import { OBJLoader, MTLLoader } from 'three-stdlib'
+import { Group, Mesh, MeshBasicMaterial, BackSide } from 'three'
 import { useEffect } from 'react'
 
 export function Sky() {
+  const { camera } = useThree()
+
   const materials = useLoader(
     MTLLoader,
     '/assets/sky/BaseplateSky.mtl'
@@ -22,11 +23,22 @@ export function Sky() {
   ) as Group
 
   useEffect(() => {
-    object.traverse((child: any) => {
-      if (child.isMesh) {
-        child.castShadow = false
-        child.receiveShadow = false
-        child.frustumCulled = false
+    object.traverse((child) => {
+      if ((child as Mesh).isMesh) {
+        const mesh = child as Mesh
+
+        // 🔑 SKY RULES
+        mesh.material = new MeshBasicMaterial({
+          map: (mesh.material as any).map ?? null,
+          side: BackSide,
+          depthWrite: false,
+          depthTest: false,
+        })
+
+        mesh.castShadow = false
+        mesh.receiveShadow = false
+        mesh.frustumCulled = false
+        mesh.renderOrder = -1000
       }
     })
   }, [object])
@@ -34,9 +46,8 @@ export function Sky() {
   return (
     <primitive
       object={object}
-      scale={50}
-      position={[0, 0, 0]}
-      rotation={[0, 0, 0]}
+      // scale={500}                 // 🔑 MUST be huge
+      position={camera.position}  // 🔑 camera-locked
     />
   )
 }
