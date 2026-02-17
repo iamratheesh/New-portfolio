@@ -1,25 +1,29 @@
 {
-  "name": "portfolio",
-  "version": "0.1.0",
+  "name": "iamratheesh-portfolio",
+  "version": "1.0.0",
   "private": true,
+  "description": "Production-grade Next.js portfolio application.",
+  "author": "Ratheesh",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20.0.0",
+    "npm": ">=9.0.0"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf .next node_modules",
+    "analyze": "ANALYZE=true next build"
   },
   "dependencies": {
-    "@react-three/drei": "^10.7.7",
-    "@react-three/fiber": "^9.5.0",
-    "@react-three/rapier": "^2.2.0",
-    "framer-motion": "^12.33.0",
     "next": "16.1.6",
     "react": "19.2.3",
     "react-dom": "19.2.3",
-    "sass": "^1.97.3",
-    "three": "^0.182.0",
-    "three-stdlib": "^2.36.1",
-    "zustand": "^5.0.11"
+    "sass": "^1.97.3"
   },
   "devDependencies": {
     "@types/node": "^20",
