@@ -1,0 +1,136 @@
+@use '@/styles/variables.scss' as *;
+@use '@/styles/mixins.scss' as *;
+
+// ─── Shared image size token ───────────────────────────────────────────────────
+// All three avatars are driven by the same constant (IMAGE_SIZE = 400 in TSX).
+$avatar-size: 400px;
+
+.hero_main_container {
+  width: 100%;
+  @include flex(row, flex-start, stretch);
+  align-items: flex-start;
+
+  .hero_main_container_content {
+    width: 100%;
+    @include flex(row, flex-start, flex-start);
+    align-items: flex-start;
+
+    // ── LEFT panel ─────────────────────────────────────────────────────────────
+    .hero_main_container_content_left {
+      width: 50%;
+      height: 100vh;
+      @include flex-center;
+      // ✅ overflow: hidden would clip the zoom-in phase — keep visible
+      overflow: visible;
+      position: relative;
+
+      .hero_main_container_content_left_content {
+        width: 100%;
+        height: 100%;
+        @include flex-center;
+        position: relative;
+
+        // Fixed-size stage so all layers share identical bounds
+        .animation_stage {
+          position: relative;
+          width: $avatar-size;
+          height: $avatar-size;
+          @include flex-center;
+        }
+
+        // ── BEFORE layer ────────────────────────────────────────────────────────
+        .before_wrapper {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          z-index: 1;
+
+          .base_avatar_container {
+            position: absolute;
+            inset: 0;
+            @include flex-center;
+            will-change: transform;
+
+            img {
+              // ✅ Fixed pixel size — matches width/height props on <Image>
+              width: $avatar-size;
+              height: $avatar-size;
+              object-fit: contain;
+            }
+          }
+
+          .change_avatar_container {
+            position: absolute;
+            inset: 0;
+            @include flex-center;
+            will-change: transform, opacity;
+
+            img {
+              width: $avatar-size;
+              height: $avatar-size;
+              object-fit: contain;
+            }
+          }
+        }
+
+        // ── AFTER layer ─────────────────────────────────────────────────────────
+        // ✅ Must be position:absolute so it stacks over .before_wrapper
+        .after_wrapper {
+          position: absolute; // ← was missing; caused layout shift
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          z-index: 2;
+          overflow: hidden; // clips the counter-translating inner div
+          will-change: transform;
+
+          // Inner div that GSAP counter-translates so the image slides in
+          .after_image_wrap {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            will-change: transform;
+            @include flex-center;
+              overflow: hidden;
+
+            .after_image {
+              // ✅ Same fixed size as the other two images
+              width: $avatar-size !important;
+              height: $avatar-size !important;
+              object-fit: contain;
+              border: 2px solid $color-primary;
+              // border-bottom: $radius-md;
+              overflow: hidden;
+            }
+          }
+        }
+      }
+    }
+
+    // ── RIGHT panel (scrolls normally) ─────────────────────────────────────────
+    .hero_main_container_content_right {
+      width: 50%;
+      @include flex(column);
+
+      .hero_main_container_content_right_screen1 {
+        width: 100%;
+        height: 100vh;
+        // background-color: $color-accent;
+      }
+
+      .hero_main_container_content_right_screen2 {
+        width: 100%;
+        height: 100vh;
+        // background-color: $color-secondary;
+      }
+
+      .hero_main_container_content_right_screen3 {
+        width: 100%;
+        height: 100vh;
+        // background-color: $color-accent;
+      }
+    }
+  }
+}

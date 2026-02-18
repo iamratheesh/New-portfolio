@@ -1,11 +1,14 @@
 import '@/styles/globals.scss';
 import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
+import Background_base from '@/components/layout/background_base/Background_base';
 
 export const metadata = {
   title: 'Portfolio',
   description: 'Modern Next.js Portfolio'
 };
+
+
 
 export default function RootLayout({
   children
@@ -13,11 +16,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" >
       <body>
-        <Navbar />
+        <Background_base>
+        {/* <Navbar /> */}
         {children}
-        <Footer />
+        {/* <Footer /> */}
+        </Background_base>
       </body>
     </html>
   );

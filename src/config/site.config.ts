@@ -1,6 +1,6 @@
 export const siteConfig = {
   name: 'IamRatheesh',
-  title: 'Ratheesh | 3D Portfolio Engineer',
+  title: 'Ratheesh | Portfolio Engineer',
   description: 'Interactive 3D portfolio built with Next.js, R3F and modern architecture.',
   url: 'https://iamratheesh.dev',
   ogImage: '/og.png',
