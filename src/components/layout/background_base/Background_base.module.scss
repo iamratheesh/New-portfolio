@@ -30,12 +30,25 @@
     inset: 0;
     width: 100%;
     height: 100%;
-    background-image: url('/assets/images/background_texture.svg');
+    // background-image: url('/assets/images/background_texture.svg');
     background-size: auto;
     background-position: center;
     background-repeat: repeat;
     opacity: 0.15;
     z-index: 1;
+    pointer-events: none;
+  }
+  .background_base_light {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('/assets/images/background_light.png');
+    background-size: auto;
+    background-position: center;
+    background-repeat: repeat;
+    opacity: 0.5;
+    z-index: 2;
     pointer-events: none;
   }
 

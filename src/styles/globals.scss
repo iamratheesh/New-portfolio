@@ -12,5 +12,11 @@
 html,
 body {
   font-family: $font-family-base;
-  // background-image: ;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none;
 }

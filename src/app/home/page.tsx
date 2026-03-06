@@ -8,10 +8,10 @@ export default function HomePage() {
   return (
     <main>
       <HeroSection />
-      <SkillsSection />
       <ProjectsPreviewSection />
+      {/* <SkillsSection />
       <ExperienceSection />
-      <ContactCTASection />
+      <ContactCTASection /> */}
     </main>
   );
 }

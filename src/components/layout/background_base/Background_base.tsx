@@ -49,6 +49,7 @@ const Background_base: React.FC<{ children: React.ReactNode; }> = ({ children })
     <div ref={wrapperRef} className={styles.background_base_main_container}>
       <div className={styles.background_base_image} />
       <div className={styles.background_base_texture} />
+      <div className={styles.background_base_light} />
       <div className={styles.background_base_content}>
         {children}
       </div>

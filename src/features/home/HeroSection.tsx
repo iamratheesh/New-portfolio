@@ -18,7 +18,6 @@ export const HeroSection: React.FC = () => {
   const baseAvatarRef = useRef<HTMLDivElement>(null);
   const changeAvatarRef = useRef<HTMLDivElement>(null);
   const afterWrapperRef = useRef<HTMLDivElement>(null);
-  // ✅ Wrap the after-image in a div so we can ref it safely with Next.js <Image>
   const afterImageWrapRef = useRef<HTMLDivElement>(null);
 
   useGSAP(
@@ -43,16 +42,11 @@ export const HeroSection: React.FC = () => {
 
       const vh = window.innerHeight;
 
-      // ─── Initial states ───────────────────────────────────────────────────────
-      // changeAvatar: hidden, slightly scaled-down and nudged down
       gsap.set(changeAvatar, { opacity: 0, scale: 0.88, y: 24 });
 
-      // afterWrapper clips from below; inner wrap counter-translates so the image
-      // appears to "slide up into view" rather than stretching.
       gsap.set(afterWrapper, { yPercent: 100 });
       gsap.set(afterImageWrap, { yPercent: -100 });
 
-      // ─── Pin left panel while right panel scrolls ─────────────────────────────
       ScrollTrigger.create({
         trigger: container,
         start: 'top top',
@@ -62,12 +56,11 @@ export const HeroSection: React.FC = () => {
         anticipatePin: 1,
       });
 
-      // ─── Phase 1 — base avatar zooms from extreme to resting position ─────────
       gsap.fromTo(
         baseAvatar,
-        { scale: 4.5, x: '-100%', y: '100%' },
+        { scale: 6, x: '-350px', y: '600px' },
         {
-          scale: 1,           // ✅ land at natural scale (was 0.8 — caused size mismatch)
+          scale: 1,
           x: '0%',
           y: '0%',
           ease: 'power2.out',
@@ -80,7 +73,6 @@ export const HeroSection: React.FC = () => {
         }
       );
 
-      // ─── Phase 2 — changeAvatar fades / scales in ────────────────────────────
       gsap.to(changeAvatar, {
         opacity: 1,
         scale: 1,
@@ -94,16 +86,12 @@ export const HeroSection: React.FC = () => {
         },
       });
 
-      // ─── Phase 3 — after image reveals with clip-slide effect ─────────────────
-      // ✅ Both tweens share the SAME duration so they stay perfectly in sync when
-      //    scrubbing forward OR backward.
       const revealTimeline = gsap.timeline({
         scrollTrigger: {
           trigger: container,
-          start: `top+=${vh * 1.5}`,   // ✅ start after phase 2 finishes
+          start: `top+=${vh * 1.5}`,
           end: 'bottom bottom',
           scrub: true,
-          // ✅ onLeaveBack / onEnter snapbacks handled automatically by scrub:true
         },
       });
 
@@ -118,9 +106,9 @@ export const HeroSection: React.FC = () => {
           {
             yPercent: 0,
             ease: 'power2.inOut',
-            duration: 1,   // ✅ identical duration to wrapper tween
+            duration: 1,
           },
-          '<'              // start at the same time — keeps both in lock-step
+          '<'
         );
     },
     { scope: containerRef }
@@ -130,13 +118,11 @@ export const HeroSection: React.FC = () => {
     <section ref={containerRef} className={style.hero_main_container}>
       <div className={style.hero_main_container_content}>
 
-        {/* ── LEFT (pinned) ────────────────────────────────────────────── */}
         <div ref={leftPanelRef} className={style.hero_main_container_content_left}>
           <div className={style.hero_main_container_content_left_content}>
 
             <div className={style.animation_stage}>
 
-              {/* BEFORE layer */}
               <div ref={beforeWrapperRef} className={style.before_wrapper}>
 
                 <div ref={baseAvatarRef} className={style.base_avatar_container}>
@@ -161,9 +147,7 @@ export const HeroSection: React.FC = () => {
 
               </div>
 
-              {/* AFTER layer — wrapper clips; inner div counter-translates */}
               <div ref={afterWrapperRef} className={style.after_wrapper}>
-                {/* ✅ div wrapper so GSAP can move it independently of the Next.js Image */}
                 <div ref={afterImageWrapRef} className={style.after_image_wrap}>
                   <Image
                     src="/assets/images/orgnal_avatat.png"
@@ -180,13 +164,40 @@ export const HeroSection: React.FC = () => {
           </div>
         </div>
 
-        {/* ── RIGHT (scrolls normally) ──────────────────────────────────── */}
         <div className={style.hero_main_container_content_right}>
-          <div className={style.hero_main_container_content_right_screen1} />
-          <div className={style.hero_main_container_content_right_screen2} />
-          <div className={style.hero_main_container_content_right_screen3} />
-        </div>
+          <div className={style.hero_main_container_content_right_screen1} >
+            <div className={style.phase_one_content}>
+              <h2>HI, I’M Ratheesh, I develop</h2>
+              <h1>The Perfect <br /> Website</h1>
+              <h2>For Your Business </h2>
+            </div>
+          </div>
+          <div className={style.hero_main_container_content_right_screen2} >
+            <div className={style.phase_two_content}>
+              <div className={style.phase_two_content_top}>
+                <h2>I’m a certified</h2>
+                <h1>Web Developer</h1>
+                <h2>by Days</h2>
 
+              </div>
+              <div className={style.phase_two_content_bottom}>
+                <p>{`As your savior, I'm happy to show you what it's like to have a website that serves you and does the job it's supposed to.
+
+                  Every website deserves a unique solution, whether it's advanced custom functionalities, a need for adequately set design systems for the simple creation of landing pages, or special custom animated projects`}</p>
+              </div>
+
+            </div>
+
+          </div>
+          <div className={style.hero_main_container_content_right_screen3} >
+            <div className={style.phase_three_content}>
+              <h2>and your</h2>
+              <h1>Website <br /> Saviour</h1>
+              <h2>By Night</h2>
+            </div>
+          </div>
+
+        </div>
       </div>
     </section>
   );

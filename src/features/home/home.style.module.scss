@@ -1,8 +1,6 @@
 @use '@/styles/variables.scss' as *;
 @use '@/styles/mixins.scss' as *;
 
-// ─── Shared image size token ───────────────────────────────────────────────────
-// All three avatars are driven by the same constant (IMAGE_SIZE = 400 in TSX).
 $avatar-size: 400px;
 
 .hero_main_container {
@@ -15,12 +13,10 @@ $avatar-size: 400px;
     @include flex(row, flex-start, flex-start);
     align-items: flex-start;
 
-    // ── LEFT panel ─────────────────────────────────────────────────────────────
     .hero_main_container_content_left {
       width: 50%;
       height: 100vh;
       @include flex-center;
-      // ✅ overflow: hidden would clip the zoom-in phase — keep visible
       overflow: visible;
       position: relative;
 
@@ -30,7 +26,6 @@ $avatar-size: 400px;
         @include flex-center;
         position: relative;
 
-        // Fixed-size stage so all layers share identical bounds
         .animation_stage {
           position: relative;
           width: $avatar-size;
@@ -38,7 +33,6 @@ $avatar-size: 400px;
           @include flex-center;
         }
 
-        // ── BEFORE layer ────────────────────────────────────────────────────────
         .before_wrapper {
           position: absolute;
           inset: 0;
@@ -53,7 +47,6 @@ $avatar-size: 400px;
             will-change: transform;
 
             img {
-              // ✅ Fixed pixel size — matches width/height props on <Image>
               width: $avatar-size;
               height: $avatar-size;
               object-fit: contain;
@@ -74,18 +67,15 @@ $avatar-size: 400px;
           }
         }
 
-        // ── AFTER layer ─────────────────────────────────────────────────────────
-        // ✅ Must be position:absolute so it stacks over .before_wrapper
         .after_wrapper {
-          position: absolute; // ← was missing; caused layout shift
+          position: absolute;
           inset: 0;
           width: 100%;
           height: 100%;
           z-index: 2;
-          overflow: hidden; // clips the counter-translating inner div
+          overflow: hidden;
           will-change: transform;
 
-          // Inner div that GSAP counter-translates so the image slides in
           .after_image_wrap {
             position: absolute;
             inset: 0;
@@ -93,15 +83,13 @@ $avatar-size: 400px;
             height: 100%;
             will-change: transform;
             @include flex-center;
-              overflow: hidden;
+            overflow: hidden;
 
             .after_image {
-              // ✅ Same fixed size as the other two images
               width: $avatar-size !important;
               height: $avatar-size !important;
               object-fit: contain;
               border: 2px solid $color-primary;
-              // border-bottom: $radius-md;
               overflow: hidden;
             }
           }
@@ -109,7 +97,6 @@ $avatar-size: 400px;
       }
     }
 
-    // ── RIGHT panel (scrolls normally) ─────────────────────────────────────────
     .hero_main_container_content_right {
       width: 50%;
       @include flex(column);
@@ -117,20 +104,124 @@ $avatar-size: 400px;
       .hero_main_container_content_right_screen1 {
         width: 100%;
         height: 100vh;
-        // background-color: $color-accent;
+        @include flex-center;
+
+        .phase_one_content {
+          width: 100%;
+          height: 100%;
+          @include flex(column, center, start);
+          gap: $space-2;
+
+          h2 {
+            font-style: normal;
+            font-weight: 500;
+            font-size: $font-size-lg;
+            line-height: 43px;
+            text-transform: uppercase;
+            color: $color-text-primary;
+            opacity: 0.5;
+          }
+
+          h1 {
+            font-style: normal;
+            font-weight: 900;
+            font-size: $font-size-3xl*2;
+            line-height: 74px;
+            color: $color-text-primary;
+          }
+        }
       }
 
       .hero_main_container_content_right_screen2 {
         width: 100%;
         height: 100vh;
-        // background-color: $color-secondary;
+
+        .phase_two_content {
+          width: 100%;
+          height: 100%;
+          @include flex(column, start, start);
+          gap: $space-2;
+
+          .phase_two_content_top {
+            width: 100%;
+            height: fit-content;
+            @include flex(column, start, start);
+
+            h2 {
+              font-style: normal;
+              font-weight: 500;
+              font-size: $font-size-lg;
+              line-height: 43px;
+              text-transform: uppercase;
+              color: $color-text-primary;
+              opacity: 0.5;
+            }
+
+            h1 {
+              font-style: normal;
+              font-weight: 900;
+              font-size: $font-size-2xl*2;
+              line-height: 100px;
+              color: $color-text-primary;
+
+            }
+          }
+
+          .phase_two_content_bottom {
+            width: 80%;
+            height: fit-content;
+            @include flex(column, start, start);
+
+
+
+            p {
+              font-style: normal;
+              font-weight: 400;
+              font-size: $font-size-xs;
+              line-height: 32px;
+              color: $color-text-primary;
+            }
+          }
+        }
       }
 
       .hero_main_container_content_right_screen3 {
         width: 100%;
         height: 100vh;
-        // background-color: $color-accent;
+
+        .phase_three_content {
+          width: 100%;
+          height: 100%;
+          @include flex(column, center, start);
+          gap: $space-2;
+
+          h2 {
+            font-style: normal;
+            font-weight: 500;
+            font-size: $font-size-lg;
+            line-height: 43px;
+            text-transform: uppercase;
+            color: $color-text-primary;
+            opacity: 0.5;
+          }
+
+          h1 {
+            font-style: normal;
+            font-weight: 900;
+            font-size: $font-size-3xl*2;
+            line-height: 74px;
+            color: $color-text-primary;
+          }
+        }
       }
     }
   }
+}
+
+.projects_preview_main_container{
+  width: 100%;
+  height: 100vh;
+  @include flex(column, center, center);
+  gap: $space-2;
+  
 }
